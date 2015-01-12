@@ -1,0 +1,21 @@
+{
+  "name": "yts-movies-checker",
+  "version": "1.0.0",
+  "description": "Check Yts.re's rss feed for new movies and send push notifications using Parse.",
+  "author": "Gustavo Rodriguez Baldera <gbaldera@gmail.com>",
+  "homepage": "http://github.com/gbaldera/Yts",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/gbaldera/Yts.git"
+  },
+  "main": "movies_checker.js",
+  "dependencies": {
+    "feedparser": "^0.19.2",
+    "mongodb": "^1.4.28",
+    "parse": "^1.3.0",
+    "request": "^2.51.0",
+    "slug": "^0.8.0",
+    "underscore": "^1.7.0"
+  },
+  "readme": "ERROR: No README data found!"
+}
