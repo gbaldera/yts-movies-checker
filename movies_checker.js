@@ -8,7 +8,9 @@ var slug = require('slug')
 
 var req = request('https://yts.re/rss')
     , feedparser = new FeedParser()
-    , parsedMovies = [];
+    , parsedMovies = []
+    , PARSE_APP_KEY = process.env.PARSE_APP_KEY || ""
+    , PARSE_JAVASCRIPT_KEY = process.env.PARSE_JAVASCRIPT_KEY || "";
 
 var Movie = (function () {
     function Movie(item) {
@@ -56,11 +58,31 @@ function insertMovies(db, movies, callback){
 function sendPushNotifications(movies){
     console.log("new movies:");
     console.log(movies);
+
     if(!movies.length){
         return;
     }
 
-    // TODO: read these values from env vars
+    if(PARSE_APP_KEY != "" && PARSE_JAVASCRIPT_KEY != ""){
+
+        Parse.initialize(PARSE_APP_KEY, PARSE_JAVASCRIPT_KEY);
+        var query = new Parse.Query(Parse.Installation);
+
+        Parse.Push.send({
+            where: query, // Set our Installation query
+            data: {
+                alert: "New movies uploaded: \n\n" + _.pluck(movies, "title").join("\n")
+            }
+        }, {
+            success: function () {
+                // Push was successful
+            },
+            error: function (error) {
+                // Handle error
+            }
+        });
+
+    }
 }
 
 req.on('error', function (error) {
@@ -99,7 +121,7 @@ feedparser.on('end', function(){ // This is where the action is!
             assert.equal(null, err);
             console.log("Connected correctly to server");
 
-            filterMovies(db, movies, function(filteredMovies){
+            filterMovies(db, parsedMovies, function(filteredMovies){
                 insertMovies(db, filteredMovies, function(insertedMovies){
                     db.close();
                     sendPushNotifications(insertedMovies);
