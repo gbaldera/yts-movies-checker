@@ -17,6 +17,6 @@ A Nodejs script which check Yts.re's rss feed for new movies and send push notif
 
 	npm install
 	
-6 - Set a cron job to run the script a certain time. For example run the script every hour:
+6 - Set a cron job to run the script at certain time. For example run the script every hour:
 
 	0 * * * * /usr/local/bin/node /path/to/cloned/repository/movies_checker.js
