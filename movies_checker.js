@@ -66,10 +66,9 @@ function sendPushNotifications(movies){
     if(PARSE_APP_KEY != "" && PARSE_JAVASCRIPT_KEY != ""){
 
         Parse.initialize(PARSE_APP_KEY, PARSE_JAVASCRIPT_KEY);
-        var query = new Parse.Query(Parse.Installation);
 
         Parse.Push.send({
-            where: query, // Set our Installation query
+            channels: [""], // Set the broadcast channel
             data: {
                 alert: "New movies uploaded: \n\n" + _.pluck(movies, "title").join("\n")
             }
