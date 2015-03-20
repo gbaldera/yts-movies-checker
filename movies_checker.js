@@ -6,7 +6,7 @@ var slug = require('slug')
     , request = require('request')
     , _ = require('underscore');
 
-var req = request('https://yts.re/rss')
+var req = request('https://yts.to/rss')
     , feedparser = new FeedParser()
     , parsedMovies = []
     , PARSE_APP_KEY = process.env.PARSE_APP_KEY || ""
